@@ -449,7 +449,6 @@ module ActiveMerchant #:nodoc:
           xml.tag! 'expirationMonth', format(creditcard.month, :two_digits) unless creditcard.month.blank?
           xml.tag! 'expirationYear', format(creditcard.year, :four_digits)  unless creditcard.year.blank?
           xml.tag!('cvNumber', creditcard.verification_value) unless (@options[:ignore_cvv] || creditcard.verification_value.blank? )
-          xml.tag! 'cardType', @@credit_card_codes[card_brand(creditcard).to_sym] unless card_brand(creditcard).blank?
         end
       end
 
