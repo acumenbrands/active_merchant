@@ -419,6 +419,12 @@ module ActiveMerchant #:nodoc:
         options_matching_key[option_name] if options_matching_key
       end
 
+      def optionally_add_line_item_data(xml, options)
+        if options[:line_items].present?
+          add_line_item_data(xml, options)
+        end
+      end
+
       def add_line_item_data(xml, options)
         options[:line_items].each_with_index do |value, index|
           xml.tag! 'item', {'id' => index} do
@@ -637,6 +643,7 @@ module ActiveMerchant #:nodoc:
         else
           add_address(xml, payment_method_or_reference, options[:billing_address], options)
           add_address(xml, payment_method_or_reference, options[:shipping_address], options, true)
+          optionally_add_line_item_data(xml, options)
           add_purchase_data(xml, money, true, options)
           add_creditcard(xml, payment_method_or_reference)
         end
